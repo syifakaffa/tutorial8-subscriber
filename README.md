@@ -21,3 +21,13 @@ String tersebut terdiri dari dua bagian, yaitu:
   dan "5672" adalah nomor port yang digunakan oleh layanan AMQP untuk menerima koneksi.
 
 Jadi, string ini digunakan untuk mengidentifikasi pengguna (username dan password) dan lokasi layanan AMQP yang akan diakses.
+
+**Simulation slow subscriber**
+![img1.png](image%2Fimg1.png)
+
+Dari gambar di atas, bisa dilihat bahwa jumlah total message dalam antran pada satu waktu sebanyak +-20 message
+(saya menjalankan 6 kali cargo run). Hal ini terjadi karena subscriber memerlukan lebih banyak waktu untuk mengelola
+setiap event dalam message queued, sehingga terjadi penumpukan pesan karena publisher lebih cepat dalam mempublish
+pesan daripada subscriber dalam mengolahnya.
+
+

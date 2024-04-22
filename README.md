@@ -30,4 +30,22 @@ Dari gambar di atas, bisa dilihat bahwa jumlah total message dalam antran pada s
 setiap event dalam message queued, sehingga terjadi penumpukan pesan karena publisher lebih cepat dalam mempublish
 pesan daripada subscriber dalam mengolahnya.
 
+**Reflection and Running at least three subscribers**
+![img2.png](image%2Fimg2.png)
+
+Dari gambar di atas, bisa dilihat bahwa lonjakan message queued berkurang dari yang sebelum menggunakan 3 console 
+subscriber (Kasus ini sama-sama dilakukan dengan melakukan 6 kali cargo run pada publisher). Hal ini terjadi karena
+karena file main.rs pada subscriber terdapat fungsi sleep (thread::sleep(ten_millis);) yang membuat adanya penundaan 
+selama 1 detik (1000 milidetik) sebelum mencetak pesan. Karena adanya penundaan tersebut, program diberikan lebih 
+banyak waktu untuk memproses pesan secara berurutan, sehinnga penumpukan antrean menjadi berkurang. Selain itu,
+penggunaan 3 console subsriber yang menjalankan cargo run secara bersamaan juga bisa menjadi salah satu penyabab adanya
+pengurangan lonjakan tersebut. 
+
+Saran perbaikan kode:
+- Pengolahan Asynchronous: Secara umum pada kode program, Publisher mengirimkan pesan secara sinkron . Jika kecepatan 
+menjadi perhatian utama, mengubah pengiriman pesan menjadi asinkronus bisa memberikan benefit. Dengan pengiriman 
+asinkronus, publisher dapat melanjutkan tugasnya tanpa menunggu konfirmasi pesan selesai dikirim, yang dapat 
+meningkatkan efisiensi.
+
+
 
